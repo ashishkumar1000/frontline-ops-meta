@@ -46,7 +46,7 @@ Today it is **empty** — entries are added as repos come into existence. One en
 
 ```yaml
 - id: frontline-ops-contracts
-  path: core/contracts/frontline-ops-contracts
+  path: workspace/core/contracts/frontline-ops-contracts
   remote: git@github.com:ashishkumar1000/frontline-ops-contracts.git
   role: contracts
   default_branch: main
@@ -57,9 +57,9 @@ Today it is **empty** — entries are added as repos come into existence. One en
 | Field | Meaning |
 |---|---|
 | `id` | Stable short name. Used by the tooling and by `docs/repos/<id>/` |
-| `path` | Where it clones under `workspace/` (relative to the workspace root) |
+| `path` | Where it clones, **relative to this repo's root** — keep the `workspace/` prefix (`workspace/core/<role>/<repo-id>`) so the clone lands inside the gitignored workspace |
 | `remote` | Git URL cloned from |
-| `role` | `mobile` / `backend` / `web` / `contracts` / … — drives the push order |
+| `role` | `mobile` / `backend` / `web-admin` / `contracts` / … — drives the push order |
 | `default_branch` | Branch that `workspace:setup` clones |
 | `status` | `planned` / `active` / `archived` |
 | `docs_dir` | Where this repo's durable notes live inside the meta repo |
@@ -113,7 +113,7 @@ Useful flags: `--dry-run` (show what would happen, change nothing), `--only <id>
 5. Commit the catalog + docs changes here (that part is a meta change — rule 1 above).
 
 Expected roles, following the target stack in
-[`docs/_context/conventions.md`](docs/_context/conventions.md): `mobile`, `backend`, `web`,
+[`docs/_context/conventions.md`](docs/_context/conventions.md): `mobile`, `backend`, `web-admin`,
 `contracts` (the spec's engineering-decisions register already mandates a polyrepo setup with a
 dedicated platform-contracts repo — this metarepo is that setup).
 
