@@ -1,4 +1,4 @@
-# Frontline Operations Platform — Explained in Simple English
+# Frontline Operations Platform
 
 ## What is this project?
 
