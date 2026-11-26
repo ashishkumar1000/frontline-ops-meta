@@ -1,0 +1,21 @@
+version: 1
+workspace_root: workspace
+core_root: workspace/core
+external_root: workspace/external
+
+# Registered repos that this meta repo governs and clones on setup.
+# EMPTY TODAY: no child repos exist yet. When the first child repo is created,
+# add an entry here (and a matching docs/repos/<id>/ folder), then re-run
+# `bun run workspace:setup` — it clones only what's missing.
+#
+# Entry format (role values in use: mobile | backend | web-admin | contracts):
+#
+# repos:
+#   - id: frontline-ops-mobile
+#     path: workspace/core/mobile/frontline-ops-mobile
+#     remote: https://github.com/ashishkumar1000/frontline-ops-mobile.git
+#     role: mobile
+#     default_branch: main
+#     status: active
+#     docs_dir: docs/repos/frontline-ops-mobile
+repos: []

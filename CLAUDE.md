@@ -30,3 +30,30 @@ We use a strict two-stage workflow. Never mix their responsibilities:
 - Treat `docs/architecture.md`, `docs/PRD.md`, and `.planning/codebase/` as the strict source of truth.
 - Never mark a GSD task complete without passing unit/integration tests, linter, and typechecks.
 - Keep git commits atomic and scoped to the active GSD task.
+
+---
+## Control-Plane Rules (Metarepo, Structural — Mandatory)
+
+This repo is the **control plane** for the Frontline Ops child repos. No child repos exist yet;
+when they do, they are registered in `docs/repo-catalog.yaml` and cloned by
+`bun run workspace:setup` into `workspace/core/<role>/<repo-id>` as **independent git repos**.
+
+- **Commit in the repo the change belongs to — never from the meta root.** Files under
+  `workspace/core/**` or `workspace/external/**` → run git inside that child repo (`git -C <path>`),
+  push to its own remote. Files under `docs/`, `scripts/`, or other meta-only paths → commit here
+  in `frontline-ops-meta`. Never `git add -A && git commit` from the meta root — child repos are
+  gitignored here on purpose; the `hooks/pre-commit` net rejects violations.
+- **A change spanning two repos = two commits in two repos**, optionally noted together under
+  `docs/initiatives/`. Same-session edits never mean "ships together" — always state which repo
+  merges/deploys first.
+- **Cross-repo change ordering.** Child repos deploy independently. Additive change (new
+  field/endpoint, existing behavior untouched) → producing side (backend/contracts) merges/deploys
+  first, consumers after. Breaking change → three steps: (1) producer adds the new shape alongside
+  the old, (2) consumers switch, (3) producer removes the old shape in a separate change.
+- **Registering a repo:** add an entry to `docs/repo-catalog.yaml` (id, path, remote, role,
+  default_branch, status, docs_dir) + create `docs/repos/<id>/`; re-run `bun run workspace:setup`.
+  Per-repo durable notes live in `docs/repos/<id>/`; cross-repo work notes in `docs/initiatives/`.
+- **Push orchestration:** `bun run workspace:push` pushes backend/contract repos first, then
+  others, then this meta repo last. It never force-pushes; diverged/dirty repos are skipped with
+  the fix command shown.
+- **Bun only** for this repo's tooling — never npm/yarn/pnpm; never commit their lockfiles.

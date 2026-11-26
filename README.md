@@ -1,12 +1,20 @@
 # Frontline Operations & Agentic Ops Platform
 
-A complete, build-ready specification package for a **mobile-first B2B SaaS platform** that runs
-frontline operations — the daily work done at stores, restaurants, warehouses, facilities, and
-factory floors — from one governed system instead of a pile of disconnected tools.
+This repo has two jobs:
 
-> **This repo contains specifications, not source code.** The documents are written at build-ready
-> depth (concrete schemas, API contracts, state machines) so engineering teams can implement
-> directly from them. If you're new here, everything below links to a plain-language README first.
+1. **Control plane (metarepo)** — the orchestrator for the Frontline Ops **child repos** (mobile
+   app, backend services, web admin, platform contracts — none exist yet). It holds the repo
+   catalog, durable cross-repo context, and bun-based workspace tooling (`setup` / `status` /
+   `push`), giving one AI agent shared context and filesystem access to all child repos in a
+   single session while keeping each child's git history separate.
+2. **The specification package** — a complete, build-ready specification set for a **mobile-first
+   B2B SaaS platform** that runs frontline operations (stores, restaurants, warehouses, facilities,
+   factory floors) from one governed system instead of a pile of disconnected tools.
+
+> **This repo contains specifications and orchestration tooling, not application source code.**
+> The spec documents are written at build-ready depth (concrete schemas, API contracts, state
+> machines); application code will live in the child repos. If you're new here, everything below
+> links to a plain-language README first.
 
 ## The big idea, in three lines
 
@@ -69,6 +77,28 @@ This repo runs a strict two-layer AI workflow — the full rules live in
   `/gsd:discuss-phase` (clarify edge cases) → `/gsd:plan-phase` (atomic verifiable tasks) →
   `/gsd:execute-phase` (fresh context window per task, no context rot) → `/gsd:verify-work`
   (tests + lint + typechecks must pass before a task counts as done).
+
+## Control plane: quick start
+
+Child repos are registered in [`docs/repo-catalog.yaml`](docs/repo-catalog.yaml) — the list is
+**empty today**; entries are added as repos come into existence.
+
+```bash
+bun install              # bun only — other package managers are rejected by design
+bun run workspace:setup  # clone every registered repo into workspace/core/ (skips existing)
+bun run workspace:status # one-pass git status across all child repos
+bun run workspace:push   # fetch → review → push in order: backend/contracts first, meta last
+bun run typecheck        # typecheck the workspace tooling
+```
+
+**The one rule that makes this work:** every child repo is its own git repo with its own remote.
+Commit changes *inside* the child repo they belong to — never from this meta root
+(`workspace/**` is gitignored here, and a pre-commit hook rejects violations). Cross-repo changes
+get separate commits per repo, deployed producing-side-first (details in
+[`CLAUDE.md`](CLAUDE.md), binding for all agents).
+
+- `docs/repos/<id>/` — durable per-child notes (architecture, contracts, conventions)
+- `docs/initiatives/` — notes for work spanning multiple repos
 
 ## Repo notes
 
