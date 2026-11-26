@@ -57,3 +57,21 @@ when they do, they are registered in `docs/repo-catalog.yaml` and cloned by
   others, then this meta repo last. It never force-pushes; diverged/dirty repos are skipped with
   the fix command shown.
 - **Bun only** for this repo's tooling — never npm/yarn/pnpm; never commit their lockfiles.
+
+---
+## Where BMAD & GSD Run (Metarepo Mapping — Mandatory)
+
+The routing rules above were written for a single repo. In this metarepo they apply like this:
+
+- **BMAD (planning, discovery, architecture) runs at this meta root.** Product-level specs are
+  control-plane knowledge — they land in `docs/` (the spec package, e.g. `docs/00-PRD.md`,
+  `docs/01-FSD.md`, module folders) or `docs/repos/<id>/` for per-child planning. Never inside a
+  child repo.
+- **GSD (all code execution) runs inside the child repo the work belongs to**
+  (`workspace/core/<role>/<repo-id>`). On first use of a child repo, run `/gsd:new-project`
+  *inside it* so it gets its own `.planning/` baseline; commits and quality gates (tests, lint,
+  typechecks) run with that repo's own toolchain.
+- This meta repo's `.planning/codebase/` maps the **spec package only** — it is not a baseline
+  for child-repo code, and must not be used as the source of truth for it.
+- Meta-root commits stay scoped to control-plane files (`docs/`, `scripts/`, `hooks/`, catalog);
+  child-repo work is committed inside the child repo (see Control-Plane Rules above).
