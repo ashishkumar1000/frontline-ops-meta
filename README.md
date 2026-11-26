@@ -1,116 +1,195 @@
-# Frontline Operations & Agentic Ops Platform
+# Frontline Operations Platform — Explained in Simple English
 
-This repo has two jobs:
+## What is this project?
 
-1. **Control plane (metarepo)** — the orchestrator for the Frontline Ops **child repos** (mobile
-   app, backend services, web admin, platform contracts — none exist yet). It holds the repo
-   catalog, durable cross-repo context, and bun-based workspace tooling (`setup` / `status` /
-   `push`), giving one AI agent shared context and filesystem access to all child repos in a
-   single session while keeping each child's git history separate.
-2. **The specification package** — a complete, build-ready specification set for a **mobile-first
-   B2B SaaS platform** that runs frontline operations (stores, restaurants, warehouses, facilities,
-   factory floors) from one governed system instead of a pile of disconnected tools.
+This project has two main purposes:
 
-> **This repo contains specifications and orchestration tooling, not application source code.**
-> The spec documents are written at build-ready depth (concrete schemas, API contracts, state
-> machines); application code will live in the child repos. If you're new here, everything below
-> links to a plain-language README first.
+1. **Manage all project code in one place:** It helps developers manage different parts of the
+   platform, such as the mobile app, website and backend services. Each part has its own code and
+   history, but developers can manage them together.
+2. **Define how the product should work:** It contains all the plans, features, business rules and
+   technical details needed to build a platform for managing daily work in businesses.
 
-## The big idea, in three lines
+> **Important:** This project currently contains plans, instructions and tools for developers. It
+> does not contain the actual mobile app, website or backend application code yet.
 
-1. Standards, safety rules, and brand promises are made **at headquarters**, but the work that
-   fulfils them happens **at the edge** — on a phone, often offline, usually invisible to leadership.
-2. This platform closes that gap with one loop: **standard → work → evidence → exception →
-   correction → re-verification → learning**.
-3. AI is built in — but always governed by deterministic policy ("policy before AI"), because
-   ungoverned AI in a regulated, safety-relevant domain is a liability, not a feature.
+## The main idea
 
-## Where to go (this README is the index)
+The platform is designed to help businesses manage their daily work from one place.
 
-| If you want… | Go to | What's there |
+For example, it can be used by:
+
+- Retail stores
+- Restaurants
+- Warehouses
+- Factories
+- Offices and other facilities
+
+Today, many businesses use different apps, spreadsheets and paper records to manage their work.
+This platform brings everything together.
+
+Here is how it works:
+
+1. **Set the rules:** Head office decides how work should be done.
+2. **Assign work:** Employees receive their daily tasks on their phones.
+3. **Complete work:** Employees complete their assigned tasks.
+4. **Share proof:** Employees upload photos, forms or other information to show that work is
+   completed.
+5. **Report problems:** If something goes wrong, employees can report it.
+6. **Fix problems:** Managers assign someone to solve the problem.
+7. **Check again:** Managers make sure the problem has been fixed.
+8. **Learn and improve:** The business uses this information to improve how work is done.
+
+AI will also help with tasks such as checking photos, finding problems, answering questions and
+preparing reports. However, important business and safety rules will always be checked before AI
+takes action.
+
+## Where can you find information?
+
+This project contains different documents. Each document explains a different part of the product.
+
+| If you want to know... | Open this document | What it explains |
 |---|---|---|
-| **The product story** | [`docs/00-PRD.md`](docs/00-PRD.md) | Master PRD v3.0: vision, users, mobile-first strategy, roadmap, metrics |
-| **The technical architecture** | [`docs/01-FSD.md`](docs/01-FSD.md) | Platform-wide functional spec: architecture, domain model, offline sync, AI governance, security |
-| **The engineering backlog** | [`docs/02-Epics-and-Stories.md`](docs/02-Epics-and-Stories.md) | 15 epics decomposed into 154 user stories with acceptance criteria |
-| **All 25 modules, explained simply** | [`docs/modules/README.md`](docs/modules/README.md) | The module catalog — one-line description of every module, linking to each module's plain-language README |
-| **The rules every doc follows** | [`docs/_context/README.md`](docs/_context/README.md) | Shared conventions, the **binding** engineering-decisions register, source baseline, modules addendum |
-| **A file-by-file map of everything** | [`docs/README.md`](docs/README.md) | The detailed documentation index |
-| **How this meta repo works** | [`METAREPO.md`](METAREPO.md) | The full control-plane guide: the catalog, workspace commands, golden commit rules, how to register a child repo |
-| **How we build with AI** | [`CLAUDE.md`](CLAUDE.md) / [`AGENTS.md`](AGENTS.md) | The mandatory BMAD-vs-GSD routing rules every AI agent follows |
-| **The AI's map of this repo** | [`.planning/codebase/`](.planning/codebase) | Baseline stack / architecture / conventions / concerns documents generated by GSD |
+| What are we building? | [`docs/00-PRD.md`](docs/00-PRD.md) | Product idea, goals, users and future plans |
+| How will the platform work? | [`docs/01-FSD.md`](docs/01-FSD.md) | How different parts of the platform work together |
+| What needs to be developed? | [`docs/02-Epics-and-Stories.md`](docs/02-Epics-and-Stories.md) | 15 major work areas and 154 smaller tasks |
+| What are all the features? | [`docs/modules/README.md`](docs/modules/README.md) | Simple explanation of all 25 features |
+| What rules should developers follow? | [`docs/_context/README.md`](docs/_context/README.md) | Common rules and important decisions |
+| Where is everything documented? | [`docs/README.md`](docs/README.md) | List of all project documents |
+| How are different projects managed? | [`METAREPO.md`](METAREPO.md) | How to manage all parts of the project together |
+| How do AI tools help developers? | [`CLAUDE.md`](CLAUDE.md) / [`AGENTS.md`](AGENTS.md) | Rules for using AI while building the product |
 
-## The 25 modules at a glance
+## The 25 main features of the platform
 
-Full one-line descriptions live in the [module catalog](docs/modules/README.md). The short version:
+The platform is divided into 25 features, grouped by what they do.
 
-- **The foundation (01–05):** identity & org structure · work scheduling & assignment · no-code form
-  builder · the offline-first mobile app · the tamper-proof evidence vault
-- **Close the loop (06–09):** issue tracking & CAPA · targeted communications & knowledge ·
-  auto-assigned microlearning · AI photo compliance checks
-- **See and automate (10–13):** governed AI agents · executive dashboards & predictions · ERP/HR
-  integrations · security, privacy & compliance
-- **People & assets (14–18):** workforce scheduling · time & attendance · equipment maintenance
-  (CMMS) · IoT sensors · employee engagement
-- **Domain packs (19–25):** inventory & procurement · EHS safety · food safety (HACCP) ·
-  gamification · store launches · app marketplace · third-party vendor management
+### 1. Basic features (01–05)
 
-## Implementing from these docs? Read in this order
+These are the main features needed to run the platform.
 
-1. [`docs/00-PRD.md`](docs/00-PRD.md) — what we're building and why
-2. [`docs/_context/engineering-decisions.md`](docs/_context/engineering-decisions.md) — **binding**
-   platform-wide decisions (auth, versioning, CI/CD, testing gates, Definition of Done). Module docs
-   assume it and never repeat it.
-3. [`docs/01-FSD.md`](docs/01-FSD.md) — the architecture every module builds on
-4. [`docs/02-Epics-and-Stories.md`](docs/02-Epics-and-Stories.md) — the backlog
-5. The module you're working on — start at its `README.md`, then functional spec → HLD → LLD, with
-   `architecture-diagram.md` as the visual companion. All diagrams are Mermaid and render natively
-   on GitHub.
+- **Employee and company management:** Manage employees, companies, branches and teams.
+- **Task management:** Create tasks and assign them to employees.
+- **Form builder:** Create forms and checklists without writing code.
+- **Mobile app:** Employees can use the app to complete their work, even without internet.
+- **Proof and records:** Safely store photos, documents and other proof of completed work.
 
-## How features get built (BMAD plans, GSD executes)
+### 2. Problem tracking and learning (06–09)
 
-This repo runs a strict two-layer AI workflow — the full rules live in
-[`CLAUDE.md`](CLAUDE.md) and [`AGENTS.md`](AGENTS.md):
+These features help businesses find and fix problems.
 
-- **BMAD = planning, discovery & architecture only.** New module/epic or unclear requirements →
-  its Analyst/PM/Architect produce formal specs into `docs/` — then BMAD stops. It never writes
-  application code. BMAD always runs at the **meta root**: specs are control-plane knowledge.
-- **GSD = all code execution.** Every feature, refactor, or fix runs the isolated loop:
-  `/gsd:discuss-phase` (clarify edge cases) → `/gsd:plan-phase` (atomic verifiable tasks) →
-  `/gsd:execute-phase` (fresh context window per task, no context rot) → `/gsd:verify-work`
-  (tests + lint + typechecks must pass before a task counts as done). GSD runs **inside the
-  child repo** the work belongs to (`workspace/core/<role>/<repo-id>`), never at the meta root.
+- **Problem tracking:** Report problems, assign them to people and track until they are fixed.
+- **Messages and information:** Share important updates and instructions with employees.
+- **Employee training:** Give employees short training lessons based on their work.
+- **Photo checking:** Use AI to check photos and identify possible mistakes or rule violations.
 
-## Control plane: quick start
+### 3. Reports and automation (10–13)
 
-Child repos are registered in [`docs/repo-catalog.yaml`](docs/repo-catalog.yaml) — the list is
-**empty today**; entries are added as repos come into existence. **The full guide is
-[`METAREPO.md`](METAREPO.md)** — catalog format, command details, golden rules, registration
-walkthrough. Quick version:
+These features help managers understand what is happening and save time.
+
+- **AI assistants:** AI helpers that can perform approved tasks and answer questions.
+- **Management reports:** Show business performance, problems and future predictions.
+- **Connect with other software:** Share information with existing accounting, HR and business
+  systems.
+- **Security and privacy:** Protect employee and business information.
+
+### 4. Employees and equipment (14–18)
+
+These features help manage people and business equipment.
+
+- **Staff scheduling:** Plan employee shifts and working hours.
+- **Attendance tracking:** Record when employees start and finish work.
+- **Equipment maintenance:** Track machines and equipment that need repair or regular servicing.
+- **Smart sensors:** Collect information from connected devices and machines.
+- **Employee engagement:** Help businesses communicate with employees and collect their feedback.
+
+### 5. Additional business features (19–25)
+
+These features support different business needs.
+
+- **Stock and purchasing:** Manage stock and purchase supplies.
+- **Health and safety:** Track workplace safety rules and incidents.
+- **Food safety:** Help restaurants and food businesses follow food safety rules.
+- **Rewards and points:** Reward employees for completing tasks and achieving goals.
+- **New store setup:** Manage the work needed to open a new store or branch.
+- **Add-on store:** Allow businesses to add more tools and features.
+- **Vendor management:** Manage outside companies and service providers.
+
+## How do we build the product?
+
+We follow a two-step process using AI development tools.
+
+### Step 1: Plan everything first (BMAD)
+
+Before developers start building something, we first decide what needs to be built.
+
+- Understand the business requirement.
+- Discuss how the feature should work.
+- Decide what information needs to be stored.
+- Define the rules and expected behaviour.
+- Prepare clear instructions for developers.
+
+The planning team prepares the documents and designs. It does not write the actual application
+code.
+
+### Step 2: Build and test the product (GSD)
+
+Once the plan is ready, developers start building the feature.
+
+The process is:
+
+1. Discuss the work and clarify any doubts.
+2. Break the work into small tasks.
+3. Build each task separately.
+4. Run tests to check that everything works.
+5. Check the code for errors and problems.
+6. Mark the task as complete only after all checks pass.
+
+This helps ensure that developers build what was planned and that the work is properly tested.
+
+## How to get started with the project
+
+The project uses Bun to install and manage development tools.
+
+Developers need to run these commands:
 
 ```bash
-bun install              # bun only — other package managers are rejected by design
-bun run workspace:setup  # clone every registered repo into workspace/core/ (skips existing)
-bun run workspace:status # one-pass git status across all child repos
-bun run workspace:push   # fetch → review → push in order: backend/contracts first, meta last
-bun run typecheck        # typecheck the workspace tooling
+bun install              # installs everything needed to work on the project
+bun run workspace:setup  # downloads all registered projects to your computer
+bun run workspace:status # shows which projects have changes
+bun run workspace:push   # checks and sends changes to the correct project repositories
+bun run typecheck        # checks the project management tools for coding errors
 ```
 
-**The one rule that makes this work:** every child repo is its own git repo with its own remote.
-Commit changes *inside* the child repo they belong to — never from this meta root
-(`workspace/**` is gitignored here, and a pre-commit hook rejects violations). Cross-repo changes
-get separate commits per repo, deployed producing-side-first (details in
-[`CLAUDE.md`](CLAUDE.md), binding for all agents).
+> **Important:** The list of child projects is currently empty. These commands will manage
+> projects as they are added.
 
-- `docs/repos/<id>/` — durable per-child notes (architecture, contracts, conventions)
-- `docs/initiatives/` — notes for work spanning multiple repos
+## One important rule for developers
 
-## Repo notes
+Each part of the platform has its own separate code repository.
 
-- Root-level files like `functional-spec_1.md` and `high-level-design.md` are **legacy drafts of
-  Module 03** kept for history — the canonical versions live in
-  [`docs/modules/03-forms-workflow-builder/`](docs/modules/03-forms-workflow-builder/).
-- Target tech stack (React Native, Kotlin/Spring Boot, PostgreSQL + RLS, Kafka, Temporal, OPA) is
-  fixed in [`docs/_context/conventions.md`](docs/_context/conventions.md) — new docs must not invent
-  alternatives.
-- AI tooling lives in `_bmad/` (BMAD method content), `.claude/` + `.zcode/` (skills and GSD
-  commands/agents/hooks), and `.planning/` (GSD plans plus the codebase baseline map).
+For example:
+
+- Mobile app has its own repository.
+- Backend has its own repository.
+- Website has its own repository.
+
+When developers make changes, they must save those changes in the correct project.
+
+They should never save application code in the main project folder.
+
+This keeps the code of each project separate and makes it easier to manage.
+
+## Other important information
+
+- `docs/repos/` stores important information about each project.
+- `docs/initiatives/` stores information about work that affects multiple projects.
+- Some older documents are kept only for reference. Developers should use the newer documents
+  inside the correct feature folder.
+- The technology choices for building the platform have already been decided. Developers should
+  follow those choices instead of selecting different technologies.
+
+---
+
+**In simple words:** This project is the master plan and management centre for building a complete
+business operations platform. It explains what to build, how every feature should work, what rules
+to follow and how AI tools should help developers build and test it.
