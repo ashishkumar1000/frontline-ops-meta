@@ -28,7 +28,6 @@ enterprises patch together today.
 ```
 .
 ├── README.md                          ← you are here
-├── frontline-ops-spec-package.zip     ← archive of the original distributed package
 ├── docs/
 │   ├── 00-PRD.md                      Master PRD v3.0 (vision, personas, roadmap, metrics)
 │   ├── 01-FSD.md                      Platform-wide functional spec (architecture, ADRs, domain model)
